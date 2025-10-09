@@ -1,0 +1,119 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Área do Doador</title>
+    <link rel="stylesheet" href="{% static 'usuarios/css/doadores.css' %}"> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header>Área do Doador</header>
+
+    <div class="container">
+        <div class="nav">
+            <button class="active" onclick="openTab('doacoes', this)">
+                <i class="fa-solid fa-box"></i> Minhas Doações
+            </button>
+            <button onclick="openTab('ranking', this)">
+                <i class="fa-solid fa-trophy"></i> Ranking
+            </button>
+            <button onclick="openTab('perfil', this)">
+                <i class="fa-solid fa-user"></i> Perfil
+            </button>
+        </div>
+
+        <div id="doacoes" class="tab active">
+            <h2>Minhas Doações</h2>
+            <button id="novaDoacaoBtn"><i class="fa-solid fa-plus"></i> Nova Doação</button>
+
+            <div class="lista-itens">
+                <div class="item"><i class="fa-solid fa-box"></i> Arroz 5kg - 12/09/2025</div>
+                <div class="item"><i class="fa-solid fa-soap"></i> Sabonete (10 unid) - 03/08/2025</div>
+                <div class="item"><i class="fa-solid fa-shirt"></i> Roupas diversas - 21/07/2025</div>
+            </div>
+        </div>
+
+        <div id="ranking" class="tab">
+            <h2>Ranking de Doadores</h2>
+            <table>
+                <tr>
+                    <th>Posição</th>
+                    <th>Nome</th>
+                    <th>Nº Doações</th>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td><i class="fa-solid fa-crown"></i> Arthur</td>
+                    <td>35</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Emerson</td>
+                    <td>28</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>Patrick</td>
+                    <td>20</td>
+                </tr>
+            </table>
+        </div>
+
+        <div id="perfil" class="tab">
+            <h2>Meu Perfil</h2>
+            <div class="perfil-info">
+                <p><strong><i class="fa-solid fa-user"></i> Nome:</strong> Arthur Ribeiro</p>
+                <p><strong><i class="fa-solid fa-envelope"></i> Email:</strong> Arthur@gmail.com</p>
+                <p><strong><i class="fa-solid fa-phone"></i> Telefone:</strong> 21 912345678</p>
+            </div>
+            <button id="editarPerfilBtn"><i class="fa-solid fa-pen"></i> Editar Perfil</button>
+        </div>
+    </div>
+
+    <div id="modalDoacao" class="modal">
+        <div class="modal-content">
+            <h3><i class="fa-solid fa-box"></i> Cadastrar Nova Doação</h3>
+            <form>
+                <label for="tipo">Tipo de Item</label>
+                <select id="tipo" name="tipo">
+                    <option value="alimento">Alimento</option>
+                    <option value="roupa">Roupa</option>
+                    <option value="higiene">Produto de Higiene</option>
+                    <option value="outros">Outros</option>
+                </select>
+
+                <label for="descricao">Descrição</label>
+                <input type="text" id="descricao" name="descricao" placeholder="Ex: Arroz 5kg, Camiseta tamanho M">
+
+                <label for="quantidade">Quantidade</label>
+                <input type="number" id="quantidade" name="quantidade" min="1" placeholder="Digite a quantidade">
+
+                <button type="submit"><i class="fa-solid fa-check"></i> Cadastrar</button>
+                <button type="button" class="close" id="fecharModalDoacao"><i class="fa-solid fa-xmark"></i> Cancelar</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="modalPerfil" class="modal">
+        <div class="modal-content">
+            <h3><i class="fa-solid fa-user-pen"></i> Editar Perfil</h3>
+            <form>
+                <label for="nome">Nome</label>
+                <input type="text" id="nome" placeholder="Nome">
+
+                <label for="email">Email</label>
+                <input type="email" id="email" placeholder="Email">
+
+                <label for="telefone">Telefone</label>
+                <input type="tel" id="telefone" placeholder="Telefone">
+
+                <button type="submit"><i class="fa-solid fa-save"></i> Salvar Alterações</button>
+                <button type="button" class="close" id="fecharModalPerfil"><i class="fa-solid fa-xmark"></i> Cancelar</button>
+            </form>
+        </div>
+    </div>
+
+<script src="{% static 'usuarios/js/doadores.js' %}"></script> 
+</body>
+</html>

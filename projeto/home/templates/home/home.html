@@ -1,0 +1,42 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home</title>
+  <link rel="stylesheet" href="{% static 'home/css/home.css' %}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+  <nav>
+    <div class="logo">Apoia+</div>
+    <ul>
+      <li><a href="#">Início</a></li>
+      <li><a href="#">Sobre</a></li>
+      <li><a href="#">Campanhas</a></li>
+      <li><a href="#">Contato</a></li>
+    </ul>
+    <button class="user-btn" onclick="">Entrar</button>
+  </nav>
+
+  <section class="sect-class">
+    <h1>Doe e transforme vidas</h1>
+    <p>Meu projeto conecta doadores e beneficiários de forma simples e transparente. 
+       Junte-se a essa corrente do bem!</p>
+    <a href="../cadastro_login/cadastro.html" class="botao-link-section">Comece Agora</a>
+  </section>
+
+  <footer>
+    <div class="social">
+    <a href="https://instagram.com" title="Instagram" target="_blank" rel="noopener noreferrer">
+        <i class="fab fa-instagram"></i>
+    </a>
+    <a href="https://facebook.com" title="Facebook" target="_blank" rel="noopener noreferrer">
+        <i class="fab fa-facebook"></i>
+    </a>
+  </footer>
+
+<script src="{% static 'home/js/home.js' %}"></script>
+</body>
+</html>

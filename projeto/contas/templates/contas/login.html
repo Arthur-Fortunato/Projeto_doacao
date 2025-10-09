@@ -1,0 +1,25 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'contas/css/login.css' %}">
+    <title>Página de Login</title>
+</head>
+<body>
+    <div class="container">
+        <h2>Login</h2>
+        <form method="post">
+            <label for="login">Login</label>
+            <input type="text" id="login" name="login" placeholder="Entre com o seu login" required>
+
+            <label for="senha">Senha</label>
+            <input type="password" id="senha" name="senha" placeholder="Digite sua senha" required>
+            
+            <button type="submit">Entrar</button>
+        </form>
+    </div>
+<script src="{% static 'contas/js/login.js' %}"></script>
+</body>
+</html>
