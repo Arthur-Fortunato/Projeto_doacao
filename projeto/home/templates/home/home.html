@@ -13,23 +13,35 @@
 <body>
   <nav>
     <div class="logo">Apoia+</div>
+
     <ul>
       <li><a href="#">Início</a></li>
       <li><a href="#">Sobre</a></li>
       <li><a href="#">Campanhas</a></li>
       <li><a href="#">Contato</a></li>
     </ul>
-    <button class="user-btn" onclick="">Entrar</button>
-  </nav>
 
-  <p>Bem-vindo, {{ request.user.username }}!</p>
-  <a href="{% url 'logout' %}">Sair</a>
+    {% if request.user.is_authenticated %}
+    <div class="user-menu">
+      <button class="user-btn">
+        <i class="fa-solid fa-user"></i>
+      </button>
+      <div class="dropdown">
+        <p>{{ request.user.username }}</p>
+        <a href="{% url 'logout' %}">Sair</a>
+      </div>
+    </div>
+    {% else %}
+    <a href="{% url 'login' %}" class="user-btn">Entrar</a>
+    {% endif %}
+  </nav>
 
   <section class="sect-class">
     <h1>Doe e transforme vidas</h1>
-    <p>Meu projeto conecta doadores e beneficiários de forma simples e transparente.
+    <p>Nosso projeto conecta doadores e beneficiários de forma simples e transparente.
       Junte-se a essa corrente do bem!</p>
-    <a href="../cadastro_login/cadastro.html" class="botao-link-section">Comece Agora</a>
+
+    <a href="{% url 'cadastro' %}" class="botao-link-section">Comece Agora</a>
   </section>
 
   <footer>
@@ -40,9 +52,9 @@
       <a href="https://facebook.com" title="Facebook" target="_blank" rel="noopener noreferrer">
         <i class="fab fa-facebook"></i>
       </a>
+    </div>
   </footer>
 
   <script src="{% static 'home/js/home.js' %}"></script>
 </body>
-
 </html>

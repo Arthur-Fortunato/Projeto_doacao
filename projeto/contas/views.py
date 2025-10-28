@@ -37,7 +37,6 @@ def login_view(request):
             login(request, user)
             return redirect("home")  
         else:
-            from django.contrib import messages
             messages.error(request, "Usuário ou senha incorretos.")
             return render(request, "contas/login.html")
 
@@ -46,3 +45,18 @@ def login_view(request):
 def logout_view(request):
     logout(request)
     return redirect("login")
+
+def redefinir_senha(request):
+    if request.method == "POST":
+        username = request.POST.get("login")
+        password = request.POST.get("senha")
+
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect("home")  
+        else:
+            messages.error(request, "Usuário ou senha incorretos.")
+            return render(request, "contas/login.html")
+
+    return render(request, "contas/redefinicao.html")

@@ -10,6 +10,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' # tem q trocar isso aqui dps
 
 INSTALLED_APPS = [
     'django.contrib.admin',

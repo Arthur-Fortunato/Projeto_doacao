@@ -56,6 +56,7 @@ nav ul li a:hover {
   color: white;
   cursor: pointer;
   transition: background-color 0.3s;
+  text-decoration: none;
 }
 
 .user-btn:hover {
@@ -122,4 +123,66 @@ footer .social a {
 footer .social a:hover {
   color: #5c5cff;
   transform: scale(1.2);
+}
+
+.user-menu {
+  position: relative;
+  display: inline-block;
+}
+
+.user-btn i {
+  font-size: 18px;
+}
+
+.user-menu .user-btn {
+  background: none;
+  border: none;
+  padding: 6px;
+  border-radius: 50%;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+  transition: color 0.3s, background-color 0.3s;
+}
+
+.user-menu .user-btn:hover {
+  color: #5c5cff;
+  background-color: rgba(92, 92, 255, 0.1);
+}
+
+.dropdown {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: 45px;
+  background-color: #3a3a4f;
+  border-radius: 10px;
+  padding: 10px 15px;
+  min-width: 130px;
+  text-align: right;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+  z-index: 10;
+}
+
+.dropdown p {
+  margin: 0 0 8px;
+  font-weight: bold;
+  color: #d0d0e1;
+  font-size: 14px;
+}
+
+.dropdown a {
+  color: #fff;
+  text-decoration: none;
+  display: block;
+  padding: 5px 0;
+  transition: color 0.3s;
+}
+
+.dropdown a:hover {
+  color: #5c5cff;
+}
+
+.user-menu.active .dropdown {
+  display: block;
 }
