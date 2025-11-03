@@ -1,0 +1,34 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Item</title>
+    <link rel="stylesheet" href="{% static 'usuarios/css/destinatario.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h2>Editar Item</h2>
+
+        <form method="post">
+            {% csrf_token %}
+            <label for="nome_item">Nome do item</label>
+            <input type="text" name="nome_item" id="nome_item" value="{{ item.nome_item }}" required>
+
+            <label for="categoria">Categoria</label>
+            <select name="categoria" id="categoria" required>
+                <option value="alimento" {% if item.categoria == "alimento" %}selected{% endif %}>Alimento</option>
+                <option value="higiene" {% if item.categoria == "higiene" %}selected{% endif %}>Higiene</option>
+                <option value="roupa" {% if item.categoria == "roupa" %}selected{% endif %}>Roupa</option>
+                <option value="outros" {% if item.categoria == "outros" %}selected{% endif %}>Outros</option>
+            </select>
+
+            <label for="quantidade">Quantidade</label>
+            <input type="number" name="quantidade" id="quantidade" value="{{ item.quantidade }}" min="1" required>
+
+            <button type="submit"><i class="fa-solid fa-save"></i> Salvar</button>
+            <a href="{% url 'usuarios:receptor' %}" class="botao-voltar">Cancelar</a>
+        </form>
+    </div>
+</body>
+</html>

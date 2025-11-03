@@ -1,0 +1,18 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>E-mail Enviado</title>
+  <link rel="stylesheet" href="{% static 'contas/css/contas.css' %}">
+</head>
+<body>
+  <div class="container">
+    <h2>Verifique seu E-mail</h2>
+    <p>Enviamos um link de redefinição para o e-mail informado.</p>
+    <p>O link é válido por tempo limitado. Caso não encontre, verifique sua caixa de spam.</p>
+    <p class="voltar"><a href="{% url 'login' %}">Voltar ao login</a></p>
+  </div>
+</body>
+</html>

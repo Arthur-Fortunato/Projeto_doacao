@@ -1,0 +1,17 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Senha Alterada</title>
+  <link rel="stylesheet" href="{% static 'contas/css/contas.css' %}">
+</head>
+<body>
+  <div class="container">
+    <h2>Senha Redefinida com Sucesso!</h2>
+    <p>Agora você pode acessar sua conta com a nova senha.</p>
+    <a href="{% url 'login' %}" class="botao-link">Ir para o Login</a>
+  </div>
+</body>
+</html>

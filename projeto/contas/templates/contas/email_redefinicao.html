@@ -1,0 +1,9 @@
+Olá, {{ user.username }}!<br><br>
+
+Você solicitou a redefinição da sua senha no site <strong>Apoia+</strong>.<br>
+Clique no link abaixo para criar uma nova senha:<br><br>
+
+<a href="{{ protocol }}://{{ domain }}{% url 'password_reset_confirm' uidb64=uid token=token %}">
+Redefinir minha senha</a><br><br>
+
+Se você não fez essa solicitação, pode ignorar este e-mail.

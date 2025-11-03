@@ -1,14 +1,24 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <title>Área do Doador</title>
-    <link rel="stylesheet" href="{% static 'usuarios/css/doadores.css' %}"> 
+    <link rel="stylesheet" href="{% static 'usuarios/css/doadores.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
+
 <body>
-    <header>Área do Doador</header>
+    <header>
+        <div class="header-left">Área do Doador</div>
+        <div class="header-right">
+            <span>{{ request.user.username }}</span>
+            <a href="{% url 'logout' %}" class="logout-btn">
+                <i class="fa-solid fa-right-from-bracket"></i> Sair
+            </a>
+        </div>
+    </header>
 
     <div class="container">
         <div class="nav">
@@ -90,7 +100,8 @@
                 <input type="number" id="quantidade" name="quantidade" min="1" placeholder="Digite a quantidade">
 
                 <button type="submit"><i class="fa-solid fa-check"></i> Cadastrar</button>
-                <button type="button" class="close" id="fecharModalDoacao"><i class="fa-solid fa-xmark"></i> Cancelar</button>
+                <button type="button" class="close" id="fecharModalDoacao"><i class="fa-solid fa-xmark"></i>
+                    Cancelar</button>
             </form>
         </div>
     </div>
@@ -109,11 +120,13 @@
                 <input type="tel" id="telefone" placeholder="Telefone">
 
                 <button type="submit"><i class="fa-solid fa-save"></i> Salvar Alterações</button>
-                <button type="button" class="close" id="fecharModalPerfil"><i class="fa-solid fa-xmark"></i> Cancelar</button>
+                <button type="button" class="close" id="fecharModalPerfil"><i class="fa-solid fa-xmark"></i>
+                    Cancelar</button>
             </form>
         </div>
     </div>
 
-<script src="{% static 'usuarios/js/doadores.js' %}"></script> 
+    <script src="{% static 'usuarios/js/doadores.js' %}"></script>
 </body>
+
 </html>

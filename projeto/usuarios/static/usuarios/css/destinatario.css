@@ -7,14 +7,57 @@ body {
 }
 
 header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     background-color: #2c2c3a;
-    padding: 20px;
-    text-align: center;
+    padding: 15px 40px;
+    box-shadow: 0 2px 15px rgba(0,0,0,0.5);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.header-left {
     font-size: 22px;
     font-weight: bold;
     color: #5c5cff;
-    box-shadow: 0 0 10px rgba(0,0,0,0.6);
 }
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.header-right span {
+    font-size: 14px;
+    color: #ddd;
+}
+
+.logout-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background-color: #5c5cff;
+    color: #fff;
+    padding: 8px 14px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 14px;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.logout-btn:hover {
+    background-color: #4444ff;
+    transform: scale(1.05);
+}
+
+.logout-btn i {
+    font-size: 15px;
+}
+
 
 .container {
     max-width: 900px;
@@ -81,4 +124,72 @@ table th, table td {
 table th {
     background-color: #3a3a4f;
     color: #5c5cff;
+}
+
+form {
+    background-color: #3a3a4f;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+}
+
+label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: bold;
+}
+
+input, select {
+    width: 95%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: none;
+    border-radius: 6px;
+    background-color: #2c2c3a;
+    color: #fff;
+}
+
+.messages {
+    list-style: none;
+    padding: 0;
+    margin-top: 10px;
+}
+
+.messages li {
+    color: #00ff9d;
+    font-weight: bold;
+}
+
+.acoes {
+    display: flex;
+    gap: 10px;
+}
+
+.editar, .excluir {
+    color: #fff;
+    text-decoration: none;
+    font-size: 18px;
+    transition: color 0.3s;
+}
+
+.editar:hover {
+    color: #00ff9d;
+}
+
+.excluir:hover {
+    color: #ff4b4b;
+}
+
+.botao-voltar {
+    display: inline-block;
+    margin-top: 10px;
+    background-color: #777;
+    padding: 10px 15px;
+    border-radius: 6px;
+    color: white;
+    text-decoration: none;
+}
+
+.botao-voltar:hover {
+    background-color: #5c5cff;
 }

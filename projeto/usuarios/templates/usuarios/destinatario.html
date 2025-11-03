@@ -1,30 +1,79 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Página do Destinatário</title>
     <link rel="stylesheet" href="{% static 'usuarios/css/destinatario.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
+
 <body>
-    <header>Área do Destinatário</header>
+    <header>
+        <div class="header-left">Área do Destinatário</div>
+        <div class="header-right">
+            <span>{{ request.user.username }}</span>
+            <a href="{% url 'logout' %}" class="logout-btn">
+                <i class="fa-solid fa-right-from-bracket"></i> Sair
+            </a>
+        </div>
+    </header>
 
     <div class="container">
-        <h2>Itens Disponíveis na Sua Região</h2>
+        <h2>Solicitar Novo Item</h2>
+
+        <form method="post">
+            {% csrf_token %}
+            <label for="nome_item">Nome do item</label>
+            <input type="text" name="nome_item" id="nome_item" placeholder="Ex: Arroz" required>
+
+            <label for="categoria">Categoria</label>
+            <select name="categoria" id="categoria" required>
+                <option value="alimento">Alimento</option>
+                <option value="higiene">Higiene</option>
+                <option value="roupa">Roupa</option>
+                <option value="outros">Outros</option>
+            </select>
+
+            <label for="quantidade">Quantidade</label>
+            <input type="number" name="quantidade" id="quantidade" min="1" value="1" required>
+
+            <button type="submit"><i class="fa-solid fa-plus"></i> Solicitar</button>
+        </form>
+
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+
+        <hr>
+        <h2>Meus Itens Solicitados</h2>
+
         <div class="lista-itens">
+            {% for item in itens %}
             <div class="item">
-                <span>📦 Arroz 5kg</span>
-                <button>Solicitar</button>
+                <div>
+                    <span>📦 {{ item.nome_item }} ({{ item.quantidade }}x)</span><br>
+                    <small>{{ item.data_solicitacao|date:"d/m/Y H:i" }}</small>
+                </div>
+                <div class="acoes">
+                    <a href="{% url 'usuarios:editar_item' item.id %}" class="editar">
+                        <i class="fa-solid fa-pen"></i>
+                    </a>
+                    <a href="{% url 'usuarios:excluir_item' item.id %}" class="excluir"
+                        onclick="return confirm('Tem certeza que deseja excluir este item?');">
+                        <i class="fa-solid fa-trash"></i>
+                    </a>
+                </div>
             </div>
-            <div class="item">
-                <span>🧴 Kit de Higiene</span>
-                <button>Solicitar</button>
-            </div>
-            <div class="item">
-                <span>👕 Roupas de Inverno</span>
-                <button>Solicitar</button>
-            </div>
+            {% empty %}
+            <p>Nenhum item solicitado ainda.</p>
+            {% endfor %}
         </div>
 
         <div class="ranking">
@@ -53,6 +102,8 @@
             </table>
         </div>
     </div>
-<script src="{% static 'usuarios/js/destinatario.js' %}"></script> 
+
+    <script src="{% static 'usuarios/js/destinatario.js' %}"></script>
 </body>
+
 </html>
