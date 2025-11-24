@@ -24,36 +24,41 @@
     <div class="container">
         <h2>Solicitar Novo Item</h2>
 
-        <form method="post">
-            {% csrf_token %}
-            <label for="nome_item">Nome do item</label>
-            <input type="text" name="nome_item" id="nome_item" placeholder="Ex: Arroz" required>
+        <button id="abrirModal" class="abrir-modal-btn">
+            <i class="fa-solid fa-plus"></i> Solicitar Item
+        </button>
 
-            <label for="categoria">Categoria</label>
-            <select name="categoria" id="categoria" required>
-                <option value="alimento">Alimento</option>
-                <option value="higiene">Higiene</option>
-                <option value="roupa">Roupa</option>
-                <option value="outros">Outros</option>
-            </select>
+        <div id="modalSolicitacao" class="modal">
+            <div class="modal-content">
+                <h3><i class="fa-solid fa-box"></i> Solicitar Novo Item</h3>
 
-            <label for="quantidade">Quantidade</label>
-            <input type="number" name="quantidade" id="quantidade" min="1" value="1" required>
+                <form method="post">
+                    {% csrf_token %}
+                    <label for="categoria">Categoria</label>
+                    <select name="categoria" id="categoria" required>
+                        <option value="alimento">Alimento</option>
+                        <option value="higiene">Higiene</option>
+                        <option value="roupa">Roupa</option>
+                        <option value="outros">Outros</option>
+                    </select>
 
-            <button type="submit"><i class="fa-solid fa-plus"></i> Solicitar</button>
-        </form>
+                    <label for="nome_item">Nome do item</label>
+                    <input type="text" name="nome_item" id="nome_item" placeholder="Ex: Arroz 5kg" required>
 
-        {% if messages %}
-        <ul class="messages">
-            {% for message in messages %}
-            <li>{{ message }}</li>
-            {% endfor %}
-        </ul>
-        {% endif %}
+                    <label for="quantidade">Quantidade</label>
+                    <input type="number" name="quantidade" id="quantidade" min="1" value="1" required>
+
+                    <button type="submit"><i class="fa-solid fa-check"></i> Confirmar Solicitação</button>
+                    <button type="button" id="fecharModal" class="close">
+                        <i class="fa-solid fa-xmark"></i> Cancelar
+                    </button>
+                </form>
+            </div>
+        </div>
 
         <hr>
-        <h2>Meus Itens Solicitados</h2>
 
+        <h2>Meus Itens Solicitados</h2>
         <div class="lista-itens">
             {% for item in itens %}
             <div class="item">
@@ -65,10 +70,10 @@
                     <a href="{% url 'usuarios:editar_item' item.id %}" class="editar">
                         <i class="fa-solid fa-pen"></i>
                     </a>
-                    <a href="{% url 'usuarios:excluir_item' item.id %}" class="excluir"
-                        onclick="return confirm('Tem certeza que deseja excluir este item?');">
+                    <a href="#" class="excluir" data-id="{{ item.id }}">
                         <i class="fa-solid fa-trash"></i>
                     </a>
+
                 </div>
             </div>
             {% empty %}
@@ -102,6 +107,40 @@
             </table>
         </div>
     </div>
+
+    <div id="popup-success" class="popup success">
+        <i class="fa-solid fa-check"></i>
+        <span id="popup-success-msg"></span>
+    </div>
+
+    <div id="popup-error" class="popup error">
+        <i class="fa-solid fa-xmark"></i>
+        <span id="popup-error-msg"></span>
+    </div>
+
+    <div id="popup-info" class="popup info">
+        <i class="fa-solid fa-circle-info"></i>
+        <span id="popup-info-msg"></span>
+    </div>
+
+    <div id="modalExcluir" class="modal">
+        <div class="modal-content excluir-modal">
+            <h3><i class="fa-solid fa-triangle-exclamation"></i> Confirmar Exclusão</h3>
+
+            <p>Tem certeza de que deseja excluir este item?</p>
+
+            <div class="botoes-excluir">
+                <button id="cancelarExclusao" class="cancelar-btn">
+                    <i class="fa-solid fa-xmark"></i> Cancelar
+                </button>
+
+                <a id="confirmarExclusao" class="excluir-btn">
+                    <i class="fa-solid fa-trash"></i> Excluir
+                </a>
+            </div>
+        </div>
+    </div>
+
 
     <script src="{% static 'usuarios/js/destinatario.js' %}"></script>
 </body>

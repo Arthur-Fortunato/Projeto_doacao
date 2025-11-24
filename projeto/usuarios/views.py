@@ -12,17 +12,24 @@ def load_pagina_destinatario(request):
     if request.method == 'POST':
         nome_item = request.POST.get('nome_item')
         categoria = request.POST.get('categoria')
-        quantidade = request.POST.get('quantidade')
+        qtd_str   = request.POST.get('quantidade')
 
-        if nome_item and categoria and quantidade:
-            ItemSolicitado.objects.create(
-                usuario     = request.user,
-                nome_item   = nome_item,
-                categoria   = categoria,
-                quantidade  = int(quantidade)
-            )
-            messages.success(request, "Item solicitado com sucesso!")
-            return redirect('usuarios:receptor')
+        try:
+            quantidade = int(qtd_str)
+        except (TypeError, ValueError):
+            return redirect('/usuarios/destinatario/?status=error&msg=Quantidade inválida.')
+
+        if quantidade < 1:
+            return redirect('/usuarios/destinatario/?status=error&msg=A quantidade mínima é 1.')
+
+        ItemSolicitado.objects.create(
+            usuario    = request.user,
+            nome_item  = nome_item,     
+            categoria  = categoria,      
+            quantidade = quantidade
+        )
+
+        return redirect('/usuarios/destinatario/?status=success&msg=Item adicionado!')
 
     itens = ItemSolicitado.objects.filter(usuario=request.user).order_by('-data_solicitacao')
     return render(request, "usuarios/destinatario.html", {"itens": itens})
@@ -32,12 +39,24 @@ def editar_item(request, id):
     item = get_object_or_404(ItemSolicitado, id=id, usuario=request.user)
 
     if request.method == 'POST':
-        item.nome_item = request.POST.get('nome_item')
-        item.categoria = request.POST.get('categoria')
-        item.quantidade = request.POST.get('quantidade')
+        nome_item = request.POST.get('nome_item')
+        categoria = request.POST.get('categoria')
+        qtd_str = request.POST.get('quantidade')
+
+        try:
+            quantidade = int(qtd_str)
+        except (TypeError, ValueError):
+            return redirect(f'/usuarios/destinatario/?status=error&msg=Quantidade inválida.')
+
+        if quantidade < 1:
+            return redirect(f'/usuarios/destinatario/?status=error&msg=A quantidade mínima é 1.')
+
+        item.nome_item = nome_item
+        item.categoria = categoria
+        item.quantidade = quantidade
         item.save()
-        messages.success(request, "Item atualizado com sucesso!")
-        return redirect('usuarios:receptor')
+
+        return redirect('/usuarios/destinatario/?status=info&msg=Item atualizado!')
 
     return render(request, 'usuarios/editar_item.html', {'item': item})
 
@@ -46,5 +65,5 @@ def editar_item(request, id):
 def excluir_item(request, id):
     item = get_object_or_404(ItemSolicitado, id=id, usuario=request.user)
     item.delete()
-    messages.success(request, "Item excluído com sucesso!")
-    return redirect('usuarios:receptor')
+    
+    return redirect('/usuarios/destinatario/?status=info&msg=Item excluído!')
