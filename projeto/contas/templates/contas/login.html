@@ -1,45 +1,60 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="pt-BR">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'contas/css/login.css' %}">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{% static 'contas/css/login.css' %}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <title>Login</title>
-</head>
+  </head>
 
-<body>
+  <body>
     <div class="container">
-        <h2>Login</h2>
+      <h2>Login</h2>
 
-        <form method="post">
-            {% csrf_token %}
-            <label for="login">Login</label>
-            <input type="text" id="login" name="login" placeholder="Digite seu login" required>
+      <form method="post">
+        {% csrf_token %}
+        <label for="login">Login</label>
+        <input
+          type="text"
+          id="login"
+          name="login"
+          placeholder="Digite seu login"
+          required
+        />
 
-            <label for="senha">Senha</label>
-            <input type="password" id="senha" name="senha" placeholder="Digite sua senha" required>
+        <label for="senha">Senha</label>
+        <input
+          type="password"
+          id="senha"
+          name="senha"
+          placeholder="Digite sua senha"
+          required
+        />
 
-            <button type="submit">Entrar</button>
-        </form>
+        <button type="submit">Entrar</button>
+      </form>
 
-        <p style="text-align:center;margin-top:10px;">
-            Não tem conta?
-            <a href="{% url 'cadastro' %}">Cadastre-se</a>
-        </p>
+      <p class="voltar-home">
+        <a href="{% url 'home' %}">
+          <i class="fa-solid fa-arrow-left"></i> Voltar para a Home
+        </a>
+      </p>
 
-        <p style="text-align:center;margin-top:10px;">
-            Esqueceu sua senha?
-            <a href="{% url 'redefinir_senha' %}">Redefinir senha</a>
-        </p>
+      <p style="text-align: center; margin-top: 10px">
+        Não tem conta?
+        <a href="{% url 'cadastro' %}">Cadastre-se</a>
+      </p>
 
-        {% if messages %}
-        {% for message in messages %}
-        <p class="message {{ message.tags }}">{{ message }}</p>
-        {% endfor %}
-        {% endif %}
+      <p style="text-align: center; margin-top: 10px">
+        Esqueceu sua senha?
+        <a href="{% url 'redefinir_senha' %}">Redefinir senha</a>
+      </p>
+
+      {% if messages %} {% for message in messages %}
+      <p class="message {{ message.tags }}">{{ message }}</p>
+      {% endfor %} {% endif %}
     </div>
-</body>
-
+  </body>
 </html>

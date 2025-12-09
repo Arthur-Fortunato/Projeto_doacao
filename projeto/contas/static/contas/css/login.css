@@ -94,3 +94,20 @@ p a {
 .message.warning {
     color: #fbc02d; 
 }
+
+
+.voltar-home {
+    margin-top: 15px;
+}
+
+p.voltar-home a {
+    color: #5c5cff;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+p.voltar-home a:hover {
+    color: #4444ff;
+    text-decoration: underline;
+}
