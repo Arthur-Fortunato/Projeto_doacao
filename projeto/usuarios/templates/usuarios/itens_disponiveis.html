@@ -1,0 +1,87 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Itens Disponíveis</title>
+    <link
+      rel="stylesheet"
+      href="{% static 'usuarios/css/destinatario.css' %}"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+  </head>
+
+  <body>
+    <header>
+      <div class="header-left">Itens Disponíveis</div>
+      <div class="header-right">
+        <span>{{ request.user.username }}</span>
+        <a href="{% url 'logout' %}" class="logout-btn">
+          <i class="fa-solid fa-right-from-bracket"></i> Sair
+        </a>
+      </div>
+    </header>
+
+    <div class="container">
+      <h2>Doações Disponíveis</h2>
+
+      <table class="tabela-itens">
+        <thead>
+          <tr>
+            <th>Descrição</th>
+            <th>Doador</th>
+            <th>Disponível</th>
+            <th>Data</th>
+            <th>Solicitar</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {% for d in itens %}
+          <tr>
+            <td>{{ d.descricao }}</td>
+            <td>{{ d.usuario.username }}</td>
+            <td>{{ d.quantidade }}</td>
+            <td>{{ d.data_doacao|date:"d/m/Y" }}</td>
+            <td>
+              <form
+                method="post"
+                action="{% url 'usuarios:solicitar_item' d.id %}"
+              >
+                {% csrf_token %}
+                <div class="solicitar-wrapper">
+                  <input
+                    type="number"
+                    name="quantidade"
+                    value="1"
+                    min="1"
+                    max="{{ d.quantidade }}"
+                  />
+                  <button type="submit" class="btn-solicitar">
+                    <i class="fa-solid fa-hand-holding-heart"></i>
+                  </button>
+                </div>
+              </form>
+            </td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="5" style="text-align: center; padding: 15px">
+              Nenhum item disponível no momento.
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <div id="popupMessage" class="popup-message" style="display: none;">
+        <span id="popupText"></span>
+    </div>
+
+    <script src="{% static 'usuarios/js/destinatario.js' %}"></script>
+  </body>
+</html>

@@ -13,6 +13,9 @@
 <body>
     <header>
         <div class="header-left">Área do Destinatário</div>
+        <a href="{% url 'usuarios:itens_disponiveis' %}" class="abrir-modal-btn">
+            <i class="fa-solid fa-hand-holding-heart"></i> Itens Disponíveis
+        </a>
         <div class="header-right">
             <span>{{ request.user.username }}</span>
             <a href="{% url 'logout' %}" class="logout-btn">
@@ -108,21 +111,6 @@
         </div>
     </div>
 
-    <div id="popup-success" class="popup success">
-        <i class="fa-solid fa-check"></i>
-        <span id="popup-success-msg"></span>
-    </div>
-
-    <div id="popup-error" class="popup error">
-        <i class="fa-solid fa-xmark"></i>
-        <span id="popup-error-msg"></span>
-    </div>
-
-    <div id="popup-info" class="popup info">
-        <i class="fa-solid fa-circle-info"></i>
-        <span id="popup-info-msg"></span>
-    </div>
-
     <div id="modalExcluir" class="modal">
         <div class="modal-content excluir-modal">
             <h3><i class="fa-solid fa-triangle-exclamation"></i> Confirmar Exclusão</h3>
@@ -139,6 +127,10 @@
                 </a>
             </div>
         </div>
+    </div>
+
+    <div id="popupMessage" class="popup-message" style="display:none;">
+        <span id="popupText"></span>
     </div>
 
 

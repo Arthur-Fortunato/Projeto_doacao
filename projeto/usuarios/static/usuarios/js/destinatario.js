@@ -12,30 +12,26 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     // Popup 
-    const params = new URLSearchParams(window.location.search);
-    const status = params.get("status");
-    const msg = params.get("msg");
+    const url = new URLSearchParams(window.location.search);
+    const status = url.get("status");
+    const msg = url.get("msg");
 
     if (status && msg) {
-        let popup;
+        const popup = document.getElementById("popupMessage");
+        const text = document.getElementById("popupText");
 
-        if (status === "success") {
-            popup = document.getElementById("popup-success");
-            document.getElementById("popup-success-msg").textContent = msg;
-        }
-        else if (status === "error") {
-            popup = document.getElementById("popup-error");
-            document.getElementById("popup-error-msg").textContent = msg;
-        }
-        else if (status === "info") {
-            popup = document.getElementById("popup-info");
-            document.getElementById("popup-info-msg").textContent = msg;
-        }
+        text.textContent = msg;
 
-        if (popup) {
-            popup.style.display = "flex";
-            setTimeout(() => { popup.style.display = "none"; }, 5000);
-        }
+        popup.classList.add("popup-show");
+
+        if (status === "success") popup.classList.add("popup-success");
+        if (status === "error")   popup.classList.add("popup-error");
+        if (status === "info")    popup.classList.add("popup-info");
+
+        popup.style.display = "block";
+
+        setTimeout(() => popup.classList.remove("popup-show"), 2500);
+        setTimeout(() => popup.style.display = "none", 3000);
     }
 
     const modalExcluir = document.getElementById("modalExcluir");

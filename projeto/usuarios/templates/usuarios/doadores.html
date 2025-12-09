@@ -1,132 +1,297 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="pt-BR">
-
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>Área do Doador</title>
-    <link rel="stylesheet" href="{% static 'usuarios/css/doadores.css' %}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-</head>
+    <link rel="stylesheet" href="{% static 'usuarios/css/doadores.css' %}" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
 
-<body>
+  <body>
     <header>
-        <div class="header-left">Área do Doador</div>
-        <div class="header-right">
-            <span>{{ request.user.username }}</span>
-            <a href="{% url 'logout' %}" class="logout-btn">
-                <i class="fa-solid fa-right-from-bracket"></i> Sair
-            </a>
-        </div>
+      <div class="header-left">Área do Doador</div>
+      <div class="header-right">
+        <span>{{ request.user.username }}</span>
+        <a href="{% url 'logout' %}" class="logout-btn">
+          <i class="fa-solid fa-right-from-bracket"></i> Sair
+        </a>
+      </div>
     </header>
 
     <div class="container">
-        <div class="nav">
-            <button class="active" onclick="openTab('doacoes', this)">
-                <i class="fa-solid fa-box"></i> Minhas Doações
-            </button>
-            <button onclick="openTab('ranking', this)">
-                <i class="fa-solid fa-trophy"></i> Ranking
-            </button>
-            <button onclick="openTab('perfil', this)">
-                <i class="fa-solid fa-user"></i> Perfil
-            </button>
-        </div>
+      <div class="nav">
+        <button class="active" onclick="openTab('doacoes', this)">
+          <i class="fa-solid fa-box"></i> Minhas Doações
+        </button>
+        <button onclick="openTab('ranking', this)">
+          <i class="fa-solid fa-trophy"></i> Ranking
+        </button>
+        <button onclick="openTab('perfil', this)">
+          <i class="fa-solid fa-user"></i> Perfil
+        </button>
+        <button onclick="openTab('solicitacoes', this)">
+          <i class="fa-solid fa-envelope"></i> Solicitações
+        </button>
+      </div>
 
-        <div id="doacoes" class="tab active">
-            <h2>Minhas Doações</h2>
-            <button id="novaDoacaoBtn"><i class="fa-solid fa-plus"></i> Nova Doação</button>
+    <div id="solicitacoes" class="tab">
+        <h2>Solicitações Recebidas</h2>
 
-            <div class="lista-itens">
-                <div class="item"><i class="fa-solid fa-box"></i> Arroz 5kg - 12/09/2025</div>
-                <div class="item"><i class="fa-solid fa-soap"></i> Sabonete (10 unid) - 03/08/2025</div>
-                <div class="item"><i class="fa-solid fa-shirt"></i> Roupas diversas - 21/07/2025</div>
-            </div>
-        </div>
+        <table class="tabela-itens">
+            <thead>
+                <tr>
+                    <th>Item</th>
+                    <th>Solicitante</th>
+                    <th>Quantidade</th>
+                    <th>Data</th>
+                    <th>Status</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
 
-        <div id="ranking" class="tab">
-            <h2>Ranking de Doadores</h2>
-            <table>
+            <tbody>
+                {% for p in pedidos %}
                 <tr>
-                    <th>Posição</th>
-                    <th>Nome</th>
-                    <th>Nº Doações</th>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td><i class="fa-solid fa-crown"></i> Arthur</td>
-                    <td>35</td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>Emerson</td>
-                    <td>28</td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>Patrick</td>
-                    <td>20</td>
-                </tr>
-            </table>
-        </div>
+                    <td>{{ p.doacao.descricao }}</td>
+                    <td>{{ p.solicitante.username }}</td>
+                    <td>{{ p.quantidade }}</td>
+                    <td>{{ p.data_pedido|date:"d/m/Y H:i" }}</td>
 
-        <div id="perfil" class="tab">
-            <h2>Meu Perfil</h2>
-            <div class="perfil-info">
-                <p><strong><i class="fa-solid fa-user"></i> Nome:</strong> Arthur Ribeiro</p>
-                <p><strong><i class="fa-solid fa-envelope"></i> Email:</strong> Arthur@gmail.com</p>
-                <p><strong><i class="fa-solid fa-phone"></i> Telefone:</strong> 21 912345678</p>
-            </div>
-            <button id="editarPerfilBtn"><i class="fa-solid fa-pen"></i> Editar Perfil</button>
+                    <td>
+                        {% if p.status == "pendente" %}
+                            <span class="status-pendente">Pendente</span>
+                        {% elif p.status == "confirmado" %}
+                            <span class="status-confirmado">Confirmado</span>
+                        {% else %}
+                            <span class="status-negado">Negado</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if p.status == "pendente" %}
+                            <a href="{% url 'usuarios:confirmar_pedido' p.id %}" class="btn-confirmar">
+                                <i class="fa-solid fa-check"></i>
+                            </a>
+
+                            <a href="{% url 'usuarios:negar_pedido' p.id %}" class="btn-negar">
+                                <i class="fa-solid fa-xmark"></i>
+                            </a>
+                        {% else %}
+                            —
+                        {% endif %}
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6" style="text-align:center; padding:10px;">
+                        Nenhuma solicitação no momento.
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+      <div id="doacoes" class="tab active">
+        <h2>Minhas Doações</h2>
+        <button id="novaDoacaoBtn">
+          <i class="fa-solid fa-plus"></i> Nova Doação
+        </button>
+
+        <div class="lista-itens">
+          {% for d in doacoes %}
+          <div class="item">
+            <i class="fa-solid fa-box"></i>
+            {{ d.descricao }} — {{ d.data_doacao|date:"d/m/Y" }} ({{d.quantidade }})
+
+            <a
+              href="#"
+              class="editar-doacao"
+              data-id="{{ d.id }}"
+              data-tipo="{{ d.tipo }}"
+              data-descricao="{{ d.descricao }}"
+              data-quantidade="{{ d.quantidade }}"
+            >
+              <i class="fa-solid fa-pen"></i>
+            </a>
+
+            <a href="#" class="excluir-doacao" data-id="{{ d.id }}">
+              <i class="fa-solid fa-trash"></i>
+            </a>
+          </div>
+
+          {% empty %}
+          <p>Nenhuma doação cadastrada ainda.</p>
+          {% endfor %}
         </div>
+      </div>
+
+      <div id="ranking" class="tab">
+        <h2>Ranking de Doadores</h2>
+        <table>
+          <tr>
+            <th>Posição</th>
+            <th>Nome</th>
+            <th>Nº Doações</th>
+          </tr>
+          <tr>
+            <td>1</td>
+            <td><i class="fa-solid fa-crown"></i> Arthur</td>
+            <td>35</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>Emerson</td>
+            <td>28</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>Patrick</td>
+            <td>20</td>
+          </tr>
+        </table>
+      </div>
+
+      <div id="perfil" class="tab">
+        <h2>Meu Perfil</h2>
+        <div class="perfil-info">
+          <p>
+            <strong><i class="fa-solid fa-user"></i> Nome:</strong> Arthur
+            Ribeiro
+          </p>
+          <p>
+            <strong><i class="fa-solid fa-envelope"></i> Email:</strong>
+            Arthur@gmail.com
+          </p>
+          <p>
+            <strong><i class="fa-solid fa-phone"></i> Telefone:</strong> 21
+            912345678
+          </p>
+        </div>
+        <button id="editarPerfilBtn">
+          <i class="fa-solid fa-pen"></i> Editar Perfil
+        </button>
+      </div>
     </div>
 
     <div id="modalDoacao" class="modal">
+      <div class="modal-content">
+        <h3><i class="fa-solid fa-box"></i> Cadastrar Nova Doação</h3>
+        <form method="post">
+          {% csrf_token %}
+          <label for="tipo">Tipo de Item</label>
+          <select id="tipo" name="tipo">
+            <option value="alimento">Alimento</option>
+            <option value="roupa">Roupa</option>
+            <option value="higiene">Produto de Higiene</option>
+            <option value="outros">Outros</option>
+          </select>
+
+          <label for="descricao">Descrição</label>
+          <input
+            type="text"
+            id="descricao"
+            name="descricao"
+            placeholder="Ex: Arroz 5kg, Camiseta tamanho M"
+          />
+
+          <label for="quantidade">Quantidade</label>
+          <input type="number" id="quantidade" name="quantidade" min="1" />
+
+          <button type="submit">
+            <i class="fa-solid fa-check"></i> Cadastrar
+          </button>
+
+          <button type="button" class="close" id="fecharModalDoacao">
+            <i class="fa-solid fa-xmark"></i> Cancelar
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <div id="modalEditarDoacao" class="modal">
         <div class="modal-content">
-            <h3><i class="fa-solid fa-box"></i> Cadastrar Nova Doação</h3>
-            <form>
-                <label for="tipo">Tipo de Item</label>
-                <select id="tipo" name="tipo">
+            <h3><i class="fa-solid fa-pen"></i> Editar Doação</h3>
+
+            <form id="formEditar" method="post">
+                {% csrf_token %}
+                
+                <label for="edit_tipo">Tipo de Item</label>
+                <select id="edit_tipo" name="tipo">
                     <option value="alimento">Alimento</option>
                     <option value="roupa">Roupa</option>
                     <option value="higiene">Produto de Higiene</option>
                     <option value="outros">Outros</option>
                 </select>
 
-                <label for="descricao">Descrição</label>
-                <input type="text" id="descricao" name="descricao" placeholder="Ex: Arroz 5kg, Camiseta tamanho M">
+                <label for="edit_descricao">Descrição</label>
+                <input type="text" id="edit_descricao" name="descricao">
 
-                <label for="quantidade">Quantidade</label>
-                <input type="number" id="quantidade" name="quantidade" min="1" placeholder="Digite a quantidade">
+                <label for="edit_quantidade">Quantidade</label>
+                <input type="number" id="edit_quantidade" name="quantidade" min="1">
 
-                <button type="submit"><i class="fa-solid fa-check"></i> Cadastrar</button>
-                <button type="button" class="close" id="fecharModalDoacao"><i class="fa-solid fa-xmark"></i>
-                    Cancelar</button>
+                <button type="submit">
+                    <i class="fa-solid fa-save"></i> Salvar
+                </button>
+
+                <button type="button" class="close" id="fecharModalEditar">
+                    <i class="fa-solid fa-xmark"></i> Cancelar
+                </button>
             </form>
         </div>
     </div>
 
     <div id="modalPerfil" class="modal">
-        <div class="modal-content">
-            <h3><i class="fa-solid fa-user-pen"></i> Editar Perfil</h3>
-            <form>
-                <label for="nome">Nome</label>
-                <input type="text" id="nome" placeholder="Nome">
+      <div class="modal-content">
+        <h3><i class="fa-solid fa-user-pen"></i> Editar Perfil</h3>
+        <form>
+          <label for="nome">Nome</label>
+          <input type="text" id="nome" placeholder="Nome" />
 
-                <label for="email">Email</label>
-                <input type="email" id="email" placeholder="Email">
+          <label for="email">Email</label>
+          <input type="email" id="email" placeholder="Email" />
 
-                <label for="telefone">Telefone</label>
-                <input type="tel" id="telefone" placeholder="Telefone">
+          <label for="telefone">Telefone</label>
+          <input type="tel" id="telefone" placeholder="Telefone" />
 
-                <button type="submit"><i class="fa-solid fa-save"></i> Salvar Alterações</button>
-                <button type="button" class="close" id="fecharModalPerfil"><i class="fa-solid fa-xmark"></i>
-                    Cancelar</button>
-            </form>
-        </div>
+          <button type="submit">
+            <i class="fa-solid fa-save"></i> Salvar Alterações
+          </button>
+          <button type="button" class="close" id="fecharModalPerfil">
+            <i class="fa-solid fa-xmark"></i> Cancelar
+          </button>
+        </form>
+      </div>
     </div>
 
-    <script src="{% static 'usuarios/js/doadores.js' %}"></script>
-</body>
+    <div id="modalExcluirDoacao" class="modal">
+      <div class="modal-content excluir-modal">
+        <h3>
+          <i class="fa-solid fa-triangle-exclamation"></i> Confirmar Exclusão
+        </h3>
 
+        <p>Deseja realmente excluir esta doação?</p>
+
+        <div class="botoes-excluir">
+          <button id="cancelarExcluirDoacao" class="cancelar-btn">
+            <i class="fa-solid fa-xmark"></i> Cancelar
+          </button>
+
+          <a id="confirmarExcluirDoacao" class="excluir-btn">
+            <i class="fa-solid fa-trash"></i> Excluir
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div id="popupMessage" class="popup-message" style="display:none;">
+      <span id="popupText"></span>
+    </div>
+
+
+    <script src="{% static 'usuarios/js/doadores.js' %}"></script>
+  </body>
 </html>

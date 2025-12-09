@@ -207,3 +207,134 @@ table th {
     padding: 15px;
     border-radius: 8px;
 }
+
+.excluir-modal h3 {
+    color: #ff4b4b;
+}
+
+.botoes-excluir {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.cancelar-btn {
+    background-color: #777;
+    padding: 10px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.cancelar-btn:hover {
+    background-color: #999;
+}
+
+.excluir-btn {
+    background-color: #ff4b4b;
+    padding: 10px 15px;
+    border-radius: 6px;
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.excluir-btn:hover {
+    background-color: #d63b3b;
+}
+
+.item .excluir-doacao i {
+    color: #ff4b4b;     
+    margin-left: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.item .excluir-doacao i:hover {
+    color: #ff7777;     
+    transform: scale(1.1);
+}
+
+.item .editar-doacao i {
+    color: #5c5cff;
+    margin-left: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.item .editar-doacao i:hover {
+    color: #7777ff;
+    transform: scale(1.1);
+}
+
+.popup-message {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #2c2c3a;
+    padding: 15px 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.6);
+    color: white;
+    font-weight: bold;
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    z-index: 9999;
+}
+
+.popup-success { 
+    border-left: 5px solid #4CAF50; 
+}
+
+.popup-error { 
+    border-left: 5px solid #ff4d4d; 
+}
+
+.popup-info { 
+    border-left: 5px solid #5c5cff; 
+}
+
+.popup-show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.status-pendente {
+    color: #fbc02d;
+    font-weight: bold;
+}
+
+.status-confirmado {
+    color: #00ff9d;
+    font-weight: bold;
+}
+
+.status-negado {
+    color: #ff4b4b;
+    font-weight: bold;
+}
+
+.btn-confirmar, .btn-negar {
+    padding: 6px 10px;
+    border-radius: 6px;
+    text-decoration: none;
+    margin-right: 5px;
+}
+
+.btn-confirmar {
+    background-color: #00c853;
+    color: white;
+}
+
+.btn-confirmar:hover {
+    background-color: #009624;
+}
+
+.btn-negar {
+    background-color: #ff4b4b;
+    color: white;
+}
+
+.btn-negar:hover {
+    background-color: #d63b3b;
+}

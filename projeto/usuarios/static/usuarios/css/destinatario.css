@@ -256,38 +256,37 @@ input, select {
     to { opacity: 1; transform: scale(1); }
 }
 
-.popup {
+.popup-message {
     position: fixed;
-    bottom: 30px;
-    right: 30px;
-    padding: 12px 20px;
-    border-radius: 10px;
-    font-weight: bold;
-    font-size: 15px;
+    bottom: 20px;
+    right: 20px;
+    background-color: #2c2c3a;
     color: #fff;
-    box-shadow: 0 0 15px rgba(0,0,0,0.6);
-    display: none;
-    align-items: center;
-    gap: 10px;
-    z-index: 3000;
-    animation: fadeInAndOut 5s ease-in-out;
+    padding: 12px 18px;
+    border-radius: 8px;
+    border-left: 5px solid #4CAF50; 
+    box-shadow: 0 0 10px rgba(0,0,0,0.6);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity .3s ease, transform .3s ease;
 }
 
-.popup.success {
-    background-color: #00c86d;
+.popup-message.popup-show {
+    opacity: 1;
+    transform: translateY(0);
 }
 
-.popup.error {
-    background-color: #ff4b4b;
+.popup-success {
+    border-left-color: #4CAF50; 
 }
 
-.popup.info {
-    background-color: #3a86ff;
-}
+.popup-info { 
+    border-left-color: #5c5cff; 
+} 
 
-.popup i {
-    font-size: 18px;
-}
+.popup-error { 
+    border-left-color: #ff4d4d; 
+} 
 
 @keyframes fadeInAndOut {
     0% { opacity: 0; transform: translateY(20px); }
@@ -341,3 +340,113 @@ input, select {
 .excluir-btn:hover {
     background-color: #d63b3b;
 }
+
+.solicitar-btn {
+    background-color: #5c5cff;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.solicitar-btn:hover {
+    background-color: #4444ff;
+}
+
+.tabela-itens {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #2c2c3a;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.tabela-itens th {
+    background-color: #3a3a4f;
+    padding: 12px;
+    text-align: left;
+    color: #5c5cff;
+    font-weight: bold;
+}
+
+.tabela-itens td {
+    padding: 12px;
+    border-top: 1px solid #444;
+    color: #e0e0e0;
+}
+
+.tabela-itens tr:hover {
+    background-color: #353545;
+}
+
+.solicitar-wrapper {
+    display: flex;
+    align-items: center;     
+    justify-content: center;
+    gap: 6px;
+}
+
+.solicitar-wrapper input {
+    width: 60px;             
+    padding: 8px 10px;
+    margin: 0px 0px 0px 5px;
+    background-color: #1f1f2e;
+    border: none;
+    border-radius: 6px;
+    color: #fff;
+    text-align: center;
+    font-size: 14px;
+    line-height: 1;          
+}
+
+.solicitar-wrapper button {
+    display: flex;  
+    align-items: center;
+    justify-content: center;
+    background-color: #5c5cff;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 12px;       
+    cursor: pointer;
+    color: white;
+    font-size: 14px;
+    height: 100%;            
+    min-height: 20px;
+}
+
+.solicitar-wrapper input,
+.solicitar-wrapper button {
+    box-sizing: border-box;
+}
+
+.solicitar-wrapper button:hover {
+    background-color: #4444ff;
+}
+
+.btn-solicitar {
+    height: 34px;         
+    display: flex;        
+    align-items: center;
+    justify-content: center;
+    background-color: #5c5cff;
+    padding: 0 12px;            
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    color: white;
+    font-size: 15px;            
+    transition: background-color 0.3s;
+}
+
+.btn-solicitar i {
+    pointer-events: none;       
+}
+
+.btn-solicitar:hover {
+    background-color: #4444ff;
+}
+
