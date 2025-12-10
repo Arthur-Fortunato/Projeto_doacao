@@ -28,6 +28,10 @@
     <div class="container">
       <h2>Doações Disponíveis</h2>
 
+      <a href="{% url 'usuarios:receptor' %}" class="btn-voltar-destinatario">
+          <i class="fa-solid fa-arrow-left"></i> Voltar para Área do Destinatário
+      </a>
+      
       <table class="tabela-itens">
         <thead>
           <tr>
@@ -78,7 +82,7 @@
       </table>
     </div>
 
-    <div id="popupMessage" class="popup-message" style="display: none;">
+    <div id="popupMessage" class="popup-message" style="display:none;">
         <span id="popupText"></span>
     </div>
 

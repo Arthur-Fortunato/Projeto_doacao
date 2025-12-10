@@ -450,3 +450,50 @@ input, select {
     background-color: #4444ff;
 }
 
+.btn-voltar-destinatario {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background-color: #777;
+    color: #fff;
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-weight: bold;
+    text-decoration: none;
+    margin-bottom: 15px;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.btn-voltar-destinatario:hover {
+    background-color: #5c5cff;
+    transform: scale(1.05);
+}
+
+.btn-solicitacoes {
+    background-color: #5c5cff;
+    padding: 8px 14px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    color: white;
+    transition: 0.3s;
+}
+
+.btn-solicitacoes:hover {
+    background-color: #4444ff;
+}
+
+.status-pendente {
+    color: #ffbb33;
+    font-weight: bold;
+}
+
+.status-confirmado {
+    color: #4CAF50;
+    font-weight: bold;
+}
+
+.status-negado {
+    color: #ff4d4d;
+    font-weight: bold;
+}

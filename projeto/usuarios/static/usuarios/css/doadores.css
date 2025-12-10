@@ -338,3 +338,14 @@ table th {
 .btn-negar:hover {
     background-color: #d63b3b;
 }
+
+.btn-excluir-pedido i {
+    color: #a8a8a8;
+    transition: color 0.3s;
+    cursor: pointer;
+}
+
+.btn-excluir-pedido:hover i {
+    color: #e7e7e7;
+    scale: calc(1.1);
+}

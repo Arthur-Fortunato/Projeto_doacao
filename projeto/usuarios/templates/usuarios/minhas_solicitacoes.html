@@ -1,0 +1,77 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Minhas Solicitações</title>
+    <link rel="stylesheet" href="{% static 'usuarios/css/destinatario.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body>
+<header>
+    <div class="header-left">Minhas Solicitações</div>
+    <div class="header-right">
+        <span>{{ request.user.username }}</span>
+
+        <a href="{% url 'usuarios:receptor' %}" class="logout-btn">
+            <i class="fa-solid fa-arrow-left"></i> Voltar
+        </a>
+
+        <a href="{% url 'logout' %}" class="logout-btn">
+            <i class="fa-solid fa-right-from-bracket"></i> Sair
+        </a>
+    </div>
+</header>
+
+<div class="container">
+
+    <h2>Solicitações Enviadas</h2>
+
+    <table class="tabela-itens">
+        <thead>
+            <tr>
+                <th>Item</th>
+                <th>Doador</th>
+                <th>Quantidade</th>
+                <th>Data</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for p in pedidos %}
+            <tr>
+                <td>{{ p.doacao.descricao }}</td>
+                <td>{{ p.doacao.usuario.username }}</td>
+                <td>{{ p.quantidade }}</td>
+                <td>{{ p.data_pedido|date:"d/m/Y H:i" }}</td>
+
+                <td>
+                    {% if p.status == "pendente" %}
+                        <span class="status-pendente">Pendente</span>
+                    {% elif p.status == "confirmado" %}
+                        <span class="status-confirmado">Confirmado</span>
+                    {% else %}
+                        <span class="status-negado">Negado</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5" style="text-align:center; padding:12px;">
+                    Você ainda não fez solicitações.
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<div id="popupMessage" class="popup-message" style="display:none;">
+    <span id="popupText"></span>
+</div>
+
+<script src="{% static 'usuarios/js/destinatario.js' %}"></script>
+</body>
+</html>

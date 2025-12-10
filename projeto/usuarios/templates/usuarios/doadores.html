@@ -38,62 +38,69 @@
         </button>
       </div>
 
-    <div id="solicitacoes" class="tab">
+      <div id="solicitacoes" class="tab">
         <h2>Solicitações Recebidas</h2>
 
         <table class="tabela-itens">
-            <thead>
-                <tr>
-                    <th>Item</th>
-                    <th>Solicitante</th>
-                    <th>Quantidade</th>
-                    <th>Data</th>
-                    <th>Status</th>
-                    <th>Ações</th>
-                </tr>
-            </thead>
+          <thead>
+            <tr>
+              <th>Item</th>
+              <th>Solicitante</th>
+              <th>Quantidade</th>
+              <th>Data</th>
+              <th>Status</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
 
-            <tbody>
-                {% for p in pedidos %}
-                <tr>
-                    <td>{{ p.doacao.descricao }}</td>
-                    <td>{{ p.solicitante.username }}</td>
-                    <td>{{ p.quantidade }}</td>
-                    <td>{{ p.data_pedido|date:"d/m/Y H:i" }}</td>
+          <tbody>
+            {% for p in pedidos %}
+            <tr>
+              <td>{{ p.doacao.descricao }}</td>
+              <td>{{ p.solicitante.username }}</td>
+              <td>{{ p.quantidade }}</td>
+              <td>{{ p.data_pedido|date:"d/m/Y H:i" }}</td>
 
-                    <td>
-                        {% if p.status == "pendente" %}
-                            <span class="status-pendente">Pendente</span>
-                        {% elif p.status == "confirmado" %}
-                            <span class="status-confirmado">Confirmado</span>
-                        {% else %}
-                            <span class="status-negado">Negado</span>
-                        {% endif %}
-                    </td>
-                    <td>
-                        {% if p.status == "pendente" %}
-                            <a href="{% url 'usuarios:confirmar_pedido' p.id %}" class="btn-confirmar">
-                                <i class="fa-solid fa-check"></i>
-                            </a>
+              <td>
+                {% if p.status == "pendente" %}
+                <span class="status-pendente">Pendente</span>
+                {% elif p.status == "confirmado" %}
+                <span class="status-confirmado">Confirmado</span>
+                {% else %}
+                <span class="status-negado">Negado</span>
+                {% endif %}
+              </td>
+              <td>
+                {% if p.status == "pendente" %}
+                <a
+                  href="{% url 'usuarios:confirmar_pedido' p.id %}"
+                  class="btn-confirmar"
+                >
+                  <i class="fa-solid fa-check"></i>
+                </a>
 
-                            <a href="{% url 'usuarios:negar_pedido' p.id %}" class="btn-negar">
-                                <i class="fa-solid fa-xmark"></i>
-                            </a>
-                        {% else %}
-                            —
-                        {% endif %}
-                    </td>
-                </tr>
-                {% empty %}
-                <tr>
-                    <td colspan="6" style="text-align:center; padding:10px;">
-                        Nenhuma solicitação no momento.
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
+                <a
+                  href="{% url 'usuarios:negar_pedido' p.id %}"
+                  class="btn-negar"
+                >
+                  <i class="fa-solid fa-xmark"></i>
+                </a>
+                {% endif %}
+                <a href="{% url 'usuarios:excluir_pedido' p.id %}" class="btn-excluir-pedido">
+                  <i class="fa-solid fa-trash"></i>
+                </a>
+              </td>
+            </tr>
+            {% empty %}
+            <tr>
+              <td colspan="6" style="text-align: center; padding: 10px">
+                Nenhuma solicitação no momento.
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
         </table>
-    </div>
+      </div>
 
       <div id="doacoes" class="tab active">
         <h2>Minhas Doações</h2>
@@ -105,7 +112,7 @@
           {% for d in doacoes %}
           <div class="item">
             <i class="fa-solid fa-box"></i>
-            {{ d.descricao }} — {{ d.data_doacao|date:"d/m/Y" }} ({{d.quantidade }})
+            {{ d.descricao }} — {{ d.data_doacao|date:"d/m/Y" }} ({{d.quantidade}})
 
             <a
               href="#"
@@ -213,35 +220,33 @@
     </div>
 
     <div id="modalEditarDoacao" class="modal">
-        <div class="modal-content">
-            <h3><i class="fa-solid fa-pen"></i> Editar Doação</h3>
+      <div class="modal-content">
+        <h3><i class="fa-solid fa-pen"></i> Editar Doação</h3>
 
-            <form id="formEditar" method="post">
-                {% csrf_token %}
-                
-                <label for="edit_tipo">Tipo de Item</label>
-                <select id="edit_tipo" name="tipo">
-                    <option value="alimento">Alimento</option>
-                    <option value="roupa">Roupa</option>
-                    <option value="higiene">Produto de Higiene</option>
-                    <option value="outros">Outros</option>
-                </select>
+        <form id="formEditar" method="post">
+          {% csrf_token %}
 
-                <label for="edit_descricao">Descrição</label>
-                <input type="text" id="edit_descricao" name="descricao">
+          <label for="edit_tipo">Tipo de Item</label>
+          <select id="edit_tipo" name="tipo">
+            <option value="alimento">Alimento</option>
+            <option value="roupa">Roupa</option>
+            <option value="higiene">Produto de Higiene</option>
+            <option value="outros">Outros</option>
+          </select>
 
-                <label for="edit_quantidade">Quantidade</label>
-                <input type="number" id="edit_quantidade" name="quantidade" min="1">
+          <label for="edit_descricao">Descrição</label>
+          <input type="text" id="edit_descricao" name="descricao" />
 
-                <button type="submit">
-                    <i class="fa-solid fa-save"></i> Salvar
-                </button>
+          <label for="edit_quantidade">Quantidade</label>
+          <input type="number" id="edit_quantidade" name="quantidade" min="1" />
 
-                <button type="button" class="close" id="fecharModalEditar">
-                    <i class="fa-solid fa-xmark"></i> Cancelar
-                </button>
-            </form>
-        </div>
+          <button type="submit"><i class="fa-solid fa-save"></i> Salvar</button>
+
+          <button type="button" class="close" id="fecharModalEditar">
+            <i class="fa-solid fa-xmark"></i> Cancelar
+          </button>
+        </form>
+      </div>
     </div>
 
     <div id="modalPerfil" class="modal">
@@ -287,11 +292,13 @@
       </div>
     </div>
 
-    <div id="popupMessage" class="popup-message" style="display:none;">
+    <div id="popupMessage" class="popup-message" style="display: none">
       <span id="popupText"></span>
     </div>
 
-
+    <script>
+      const DJANGO_TAB = "{{ tab|default:'' }}";
+    </script>
     <script src="{% static 'usuarios/js/doadores.js' %}"></script>
   </body>
 </html>

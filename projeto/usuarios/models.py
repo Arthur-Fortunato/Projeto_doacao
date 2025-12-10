@@ -27,19 +27,17 @@ class Doacao(models.Model):
         return f"{self.tipo} - {self.descricao} ({self.quantidade})"
 
 class PedidoItem(models.Model):
-    solicitante = models.ForeignKey(User, on_delete=models.CASCADE, related_name="pedidos_realizados")
-    doacao = models.ForeignKey(Doacao, on_delete=models.CASCADE, related_name="pedidos_recebidos")
-    quantidade = models.PositiveIntegerField()
+    solicitante = models.ForeignKey(User, on_delete=models.CASCADE)
+    doacao      = models.ForeignKey(Doacao, on_delete=models.CASCADE)
+    quantidade  = models.PositiveIntegerField()
     data_pedido = models.DateTimeField(auto_now_add=True)
-    status = models.CharField(
+    status      = models.CharField(
         max_length=20,
         choices=[
-            ('pendente', 'Pendente'),
-            ('confirmado', 'Confirmado'),
-            ('negado', 'Negado'),
+            ("pendente", "Pendente"),
+            ("confirmado", "Confirmado"),
+            ("negado", "Negado")
         ],
-        default='pendente'
+        default="pendente"
     )
-
-    def __str__(self):
-        return f"{self.solicitante.username} → {self.doacao.descricao} ({self.quantidade})"
+    visivel_para_doador = models.BooleanField(default=True) 

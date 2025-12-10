@@ -1,4 +1,8 @@
 document.addEventListener("DOMContentLoaded", function () {
+  if (typeof DJANGO_TAB !== "undefined" && DJANGO_TAB !== "") {
+    const button = document.querySelector(`button[onclick*="${DJANGO_TAB}"]`);
+    openTab(DJANGO_TAB, button);
+  }
 
   // NOVA DOAÇÃO 
   const modalDoacao = document.getElementById("modalDoacao");

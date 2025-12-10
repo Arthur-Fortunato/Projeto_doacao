@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from .models import ItemSolicitado, Doacao, PedidoItem
 from django.contrib import messages
 
+# DOADOR
 @login_required(login_url='login')
 def load_pagina_doador(request):
     if request.method == 'POST':
@@ -70,11 +71,16 @@ def editar_doacao(request, id):
 @login_required(login_url='login')
 def solicitacoes_recebidas(request):
     pedidos = PedidoItem.objects.filter(
-        doacao__usuario=request.user
+        doacao__usuario = request.user,
+        visivel_para_doador = True
     ).order_by('-data_pedido')
-
-    return render(request, "usuarios/solicitacoes_recebidas.html", {
-        "pedidos": pedidos
+    
+    doacoes = Doacao.objects.filter(usuario=request.user).order_by('-data_doacao')
+    
+    return render(request, "usuarios/doadores.html", {
+        "pedidos": pedidos,
+        "doacoes": doacoes,
+        "tab": "solicitacoes"
     })
 
 @login_required(login_url='login')
@@ -85,7 +91,6 @@ def confirmar_pedido(request, id):
 
     return redirect("/usuarios/solicitacoes/?status=success&msg=Solicitação confirmada!")
 
-
 @login_required(login_url='login')
 def negar_pedido(request, id):
     pedido = get_object_or_404(PedidoItem, id=id, doacao__usuario=request.user)
@@ -94,7 +99,14 @@ def negar_pedido(request, id):
 
     return redirect("/usuarios/solicitacoes/?status=error&msg=Solicitação negada!")
 
+@login_required(login_url='login')
+def excluir_pedido(request, id):
+    pedido = get_object_or_404(PedidoItem, id=id, doacao__usuario=request.user)
+    pedido.visivel_para_doador = False   
+    pedido.save()
+    return redirect("/usuarios/solicitacoes/?status=info&msg=Solicitação removida da sua lista.")
 
+# DESTINATÁRIO
 @login_required(login_url='login')
 def load_pagina_destinatario(request):
     if request.method == 'POST':
@@ -178,3 +190,13 @@ def solicitar_item(request, id):
         return redirect("/usuarios/itens-disponiveis/?status=success&msg=Pedido enviado!")
 
     return redirect("/usuarios/itens-disponiveis")
+
+@login_required(login_url='login')
+def minhas_solicitacoes(request):
+    pedidos = PedidoItem.objects.filter(
+        solicitante=request.user
+    ).order_by('-data_pedido')
+
+    return render(request, "usuarios/minhas_solicitacoes.html", {
+        "pedidos": pedidos
+    })

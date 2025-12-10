@@ -16,6 +16,11 @@
         <a href="{% url 'usuarios:itens_disponiveis' %}" class="abrir-modal-btn">
             <i class="fa-solid fa-hand-holding-heart"></i> Itens Disponíveis
         </a>
+        
+        <a href="{% url 'usuarios:minhas_solicitacoes' %}" class="btn-solicitacoes">
+            <i class="fa-solid fa-list"></i> Minhas Solicitações
+        </a>
+
         <div class="header-right">
             <span>{{ request.user.username }}</span>
             <a href="{% url 'logout' %}" class="logout-btn">
